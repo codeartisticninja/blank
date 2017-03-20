@@ -1,0 +1,47 @@
+pre.
+  {$player1|0}
+  {$player2|0}
+  {$winner|0}
+  +
+
+article.checkers
+audio.music(src="assets/music/AuditoryCheesecake_Birdhouse.mp3", loop=true)
+#round1
+  p Okay.. First round.. Let's see what you've got, little guy.. ;)
+  canvas.pong(width=640, height=240, data-_map="assets/maps/pong.json")
+  pre .+
+#round2
+  p {$winner|EQ 1|Damn! You're better that I thought.. let me try that again..|EQ 2|Ha! gotcha! You ready to be humiliated a second time? ;)|Uhmm...}
+  canvas.pong(width=640, height=240, data-_map="assets/maps/pong.json")
+  pre .+
+#round3
+  p.
+    {{
+      if ($("player1") GT $("player2")) {[[
+        Dammit! Not again.. Hmmm.. One more time..? Just for practice..?
+      ]]} else if ($("player1") LT $("player2")) {[[
+        Haha! I won the match! You wanna play one more round, just for funz..? ;)
+      ]]} else {[[
+        Hmmm... seems like we're evenly matched.. One more round to break the tie!
+      ]]}
+    }}
+  canvas.pong(width=640, height=240, data-_map="assets/maps/pong.json")
+  pre .+
+#result
+  p.
+    {{
+      if ($("player1") GT $("player2")) {[[
+        {$winner|EQ 1|Well shit.. seems like you're the better man after all.. Thanks for the game..|EQ 2|Heh.. I still got it.. hmm.. too bad I lost.. :p|Uhmm...}
+      ]]} else if ($("player1") LT $("player2")) {[[
+        {$winner|EQ 1|Okay, I'll let you have that one.. I already won anyway.. ;)|EQ 2|Hahaha..!! In you face..!! :D|Uhmm...}
+      ]]}
+    }}
+  pre .+
+
+
+#end
+  p(style="text-align:center") THE END
+  ul
+    li(title="Play Again?")
+      pre {{ location.reload(); }} ..+
+  p Reloading...

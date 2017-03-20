@@ -1,0 +1,22 @@
+include _phug
+include _layout
+  noscript You need to enable JavaScript in order to play this game.
+  article.page-width
+    section#description
+      h1= appTitle
+      p= description
+    section#credits
+      :markdown-it
+        Credits
+        -------
+        Made by [codeartistic.ninja](http://the.codeartistic.ninja/)
+
+        Music by [Auditory Cheesecake](https://soundcloud.com/auditory_cheesecake)
+    form#launchSettings
+  #story: include ./assets/story/_index.pug
+  #display
+    article
+      .page-width
+        section.passage
+          
+  script(type="text/javascript", src="script/main.js")

@@ -1,0 +1,77 @@
+@page-width: 32em;
+
+@import "_reset";
+
+@media screen and (min-width: 1280px) {
+  html {
+    font-size: 32px;
+  }
+}
+
+html {
+	background-color: #000;
+  // background-image: url("moon.png");
+  background-position: center bottom;
+  background-size: cover;
+	color: #fff;
+}
+
+noscript, .noscript {
+  display: block;
+  background-color: #f90;
+  color: #420;
+  text-align: center;
+  padding: .2em;
+}
+
+article {
+  background-color: rgba(0, 0, 0, 0.5);
+	padding: 1em .8em;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.25em;
+}
+
+p, ul, ol, blockquote {
+  margin: 0.8em 0;
+}
+
+img[src$=".jpg"] {
+  border: 1px solid #fff;
+}
+
+
+.page-width {
+  margin-top: 1em;
+
+  @media (max-height: 600px) {
+    margin-top: 0;
+  }
+}
+
+#launchSettings {
+  background-color: #222;
+  border: 1px solid #111;
+  text-align: center;
+
+  span {
+    display: inline-block;
+    margin: .5em 1em;
+  }
+  button {
+    background-color: #333;
+    border: 1px solid #999;
+    display: block;
+    margin: 1em auto;
+    padding: .1em 1em;
+  }
+}
+
+@import "./_webJoypad";
+@import "./_story";
+@import "./_myStory";
