@@ -13,6 +13,7 @@ class GameApp extends BaseGameApp {
   constructor(storyElement: string, displayElement=storyElement) {
     super(storyElement, displayElement);
     this.story.addTeller("p", MadLipper);
+    MadLipper.statusBar = document.getElementById("status");
     this.story.scrollInertia = 1;
     this.initLauchSettings();
   }
@@ -24,7 +25,7 @@ class GameApp extends BaseGameApp {
     // html += '<span><input id="musicChk" type="checkbox" /> <label for="musicChk">Music</label></span> ';
     html += '<span><input id="sfxChk" type="checkbox" /> <label for="sfxChk">Sound effects</label></span> ';
     // html += '<span><input id="fullscreenChk" type="checkbox" /> <label for="fullscreenChk">Full screen</label></span> ';
-    html += '</p><p><button>Begin</button></p>';
+    html += '</p><p><button>New document</button></p>';
     form.innerHTML = html;
 
     var checkbox:HTMLInputElement;

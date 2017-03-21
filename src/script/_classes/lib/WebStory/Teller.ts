@@ -5,7 +5,7 @@ import WebStory = require("./WebStory");
 /**
  * Teller class
  * 
- * @date 02-mar-2017
+ * @date 21-mar-2017
  */
 
 var tellers:Teller[] = [];
@@ -71,6 +71,11 @@ class Teller {
 
   getTellerFromElement(element:HTMLElement) {
     return tellers[parseInt(element.dataset["_teller"])];
+  }
+
+  reevaluate() {
+    this.element.innerHTML = this.story.currentElement.innerHTML;
+    this.story.evaluate(this.element);
   }
 
   /*

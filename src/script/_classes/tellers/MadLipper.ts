@@ -8,6 +8,7 @@ import Teller   = require("../lib/WebStory/Teller");
  */
 
 class MadLipper extends Teller {
+  static statusBar:HTMLElement;
   src:string;
   output = "";
   inputName:string;
@@ -43,68 +44,30 @@ class MadLipper extends Teller {
           chars = this.element.textContent.substr(this.output.length).replace("\u00A0", " ");
       while (chars) {
         char = chars[0]; chars = chars.substr(1);
-        console.log(JSON.stringify(char), char.charCodeAt(0));
         if (this.inputName) {
-          var help = "Type in ";
-          if (this.story.get(this.inputName + "_")) {
-            help += this.story.get(this.inputName + "_");
-          } else {
-            switch (this.inputType) {
-              case " ":
-                help += "a word";
-                break;
-              
-              case ";":
-                help += "a sentence";
-                break;
-              
-              case "$":
-                help += "a paragraph";
-                break;
-              
-              default:
-                help += "something";
-                break;
-            }
-          }
-          help += ", then ";
-          switch (this.inputType) {
-            case " ":
-              help += "press space.";
-              break;
-            
-            case ";":
-              help += "press period.";
-              break;
-            
-            default:
-              help += "press enter.";
-              break;
-          }
-          console.log(help);
-          if (this.output.trim().substr(-1) !== "_") {
+          if (this.output.trim().substr(-1) !== "%") {
             this.output += char;
             this.inputValue = this.output.substr(this.inputPos);
             if (this.inputValue) {
               char = this.inputValue.substr(-1);
               if (this.inputType === char) {
-                this.inputValue.replace(char, "");
+                this.inputValue = this.inputValue.replace(char, "");
+                this.setFirstName();
+              } else if (char.toLocaleLowerCase() === char.toLocaleUpperCase() && this.inputType === " ") {
+                this.inputValue = this.inputValue.replace(char, "");
                 this.setFirstName();
               } else if (".!?".indexOf(char) !== -1 && this.inputType !== "$") {
                 this.setFirstName();
               }
             }
-          } else {
-            console.log("Press backspace to continue!");
           }
         } else {
           char = this.src.charAt(this.output.length);
           if (char === "%") {
             this.getFirstName();
-            char = "_";
-            console.log("Press backspace to continue...");
+          } else {
+            this.output = this.src.substr(0, this.output.length+1);
           }
-          this.output += char;
         }
       }
       this.setOutput();
@@ -119,6 +82,7 @@ class MadLipper extends Teller {
     } else {
       this.element.focus();
     }
+    this.setStatus();
   }
 
   getFirstName() {
@@ -139,12 +103,19 @@ class MadLipper extends Teller {
         p = this.src.length;
       }
     }
-    var val = this.story.get(this.inputName);
-    if (val && val.charAt(0) !== "%") {
-      console.log("already there!");
-      this.src = this.src.replace(name, val);
-      this.inputName = null;
-      this.inputValue = "_";
+    // var val = this.story.get(this.inputName);
+    var desc = this.story.get(this.inputName+"_");
+    if (desc instanceof Array) {
+      this.inputChoices = desc;
+    } else
+    if (name.substr(-2) === "Xe") {
+      this.inputChoices = [ "he", "she", "it", "they" ];
+    } else
+    if (name.substr(-3) === "Xim") {
+      this.inputChoices = [ "him", "her", "it", "them" ];
+    } else
+    if (name.substr(-3) === "Xis") {
+      this.inputChoices = [ "his", "her", "its", "their" ];
     }
     return name;
   }
@@ -156,10 +127,25 @@ class MadLipper extends Teller {
       return;
     }
     var name = this.getFirstName();
+    if (this.inputChoices) {
+      val = val.toLocaleLowerCase();
+      if (this.inputChoices.indexOf(val) === -1) {
+        return this.setOutput(this.output.substr(0, this.src.indexOf("%")));
+      }
+      if (name.substr(-2) === "Xe" || name.substr(-3) === "Xim" || name.substr(-3) === "Xis") {
+        var gender = this.inputChoices.indexOf(val);
+        var suf = name.substr(-3); if (suf.charAt(0) !== "X") suf = suf.substr(1);
+        this.story.set(this.inputName.replace(suf, "Xe"),  [ "he",  "she", "it", "they" ][gender]);
+        this.story.set(this.inputName.replace(suf, "Xim"), [ "him", "her", "it", "them" ][gender]);
+        this.story.set(this.inputName.replace(suf, "Xis"), [ "his", "her", "its", "their" ][gender]);
+      }
+    }
     this.story.set(this.inputName, val);
-    this.src = this.src.replace(name, val);
+    this.reevaluate();
+    this.src = this.element.textContent; //.replace(name, val);
     this.inputName = null;
-    this.inputValue = "_";
+    this.inputValue = "";
+    this.inputChoices = null;
     this.setOutput(this.src.substr(0, this.output.length));
   }
 
@@ -181,6 +167,82 @@ class MadLipper extends Teller {
     sel.removeAllRanges();
     sel.addRange(range);
     this.story.startScrolling();
+  }
+
+  setStatus(status:string="") {
+    if (!status) {
+      if (this.inputName) {
+        if (this.output.substr(-1) === "%") {
+          status = "Press backspace and type in ";
+        } else {
+          status += "Type in ";
+        }
+        if (this.inputChoices) {
+          status += this.inputChoices.join("/");
+        } else
+        if (this.story.get(this.inputName + "_")) {
+          status += this.story.get(this.inputName + "_");
+        } else
+        if (this.getSuffix(this.inputName)) {
+          status += this.getSuffix(this.inputName).toLocaleLowerCase();
+        } else {
+          switch (this.inputType) {
+            case " ":
+              status += "a word";
+              break;
+            
+            case ";":
+              status += "a sentence";
+              break;
+            
+            case "$":
+              status += "a paragraph";
+              break;
+            
+            default:
+              status += "something";
+              break;
+          }
+        }
+        if (this.output.substr(-1) !== "%") {
+          status += ", then press ";
+          switch (this.inputType) {
+            case " ":
+              status += "space.";
+              break;
+            
+            case ";":
+              status += "period.";
+              break;
+            
+            default:
+              status += "enter.";
+              break;
+          }
+        } else {
+          status += ".";
+        }
+      } else {
+        status = "Type anything."
+      }
+    }
+    if (MadLipper.statusBar) {
+      MadLipper.statusBar.textContent = status;
+    } else {
+      console.log(status);
+    }
+  }
+
+  getSuffix(name:string) {
+    var suf = "";
+    while (name) {
+      suf = name.substr(-1) + suf;
+      name = name.substr(0, name.length-1);
+      if (suf.charAt(0) !== suf.charAt(0).toLocaleLowerCase()) {
+        return suf;
+      }
+    }
+    return null;
   }
 
   hurry() {

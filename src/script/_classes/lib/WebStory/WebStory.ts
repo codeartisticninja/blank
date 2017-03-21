@@ -16,7 +16,7 @@ if (!Element.prototype.matches) {
 /**
  * WebStory class
  * 
- * @date 20-mar-2017
+ * @date 21-mar-2017
  */
 
  var _nextChoiceId=0;
@@ -88,20 +88,7 @@ class WebStory {
           }
         }
         if (tellerCandidate) {
-          if (this.choiceSelector) {
-            var tmpStorage:string[] = [];
-            var els = element.querySelectorAll(this.choiceSelector);
-            for (var i=0;i<els.length;i++) {
-              els.item(i).innerHTML = "" + (tmpStorage.push(els.item(i).innerHTML)-1);
-            }
-          }
-          element.innerHTML = this._preProcess(element.innerHTML);
-          if (this.choiceSelector) {
-            var els = element.querySelectorAll(this.choiceSelector);
-            for (var i=0;i<els.length;i++) {
-              els.item(i).innerHTML = tmpStorage[parseInt(els.item(i).innerHTML)];
-            }
-          }
+          this.evaluate(element);
           // this.appendElement(element);
           this.currentTeller = new tellerCandidate(this, element);
           this.currentTeller.init();
@@ -300,6 +287,23 @@ class WebStory {
         for (var key in data) {
           el.dataset[key] = data[key];
         }
+      }
+    }
+  }
+
+  evaluate(element:HTMLElement) {
+    if (this.choiceSelector) {
+      var tmpStorage:string[] = [];
+      var els = element.querySelectorAll(this.choiceSelector);
+      for (var i=0;i<els.length;i++) {
+        els.item(i).innerHTML = "" + (tmpStorage.push(els.item(i).innerHTML)-1);
+      }
+    }
+    element.innerHTML = this._preProcess(element.innerHTML);
+    if (this.choiceSelector) {
+      var els = element.querySelectorAll(this.choiceSelector);
+      for (var i=0;i<els.length;i++) {
+        els.item(i).innerHTML = tmpStorage[parseInt(els.item(i).innerHTML)];
       }
     }
   }
