@@ -1,6 +1,6 @@
 Theme: Write
 ============
-The theme of the month is "write".
+The theme of the moth is "write".
 
 Compile and run
 ---------------

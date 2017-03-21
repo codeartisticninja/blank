@@ -100,7 +100,7 @@ task("clean", function() {
 task("rename", function(){
   var pkg  = JSON.parse(fs.readFileSync("./package.json"));
   var data = JSON.parse(fs.readFileSync(srcDir+"data.json"));
-  var readme = fs.readFileSync("./README.md");
+  var readme = "" + fs.readFileSync("./README.md");
 
   const readline = require('readline');
   const rl = readline.createInterface({

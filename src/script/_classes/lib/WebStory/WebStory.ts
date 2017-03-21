@@ -16,7 +16,7 @@ if (!Element.prototype.matches) {
 /**
  * WebStory class
  * 
- * @date 01-mar-2017
+ * @date 20-mar-2017
  */
 
  var _nextChoiceId=0;
@@ -34,6 +34,7 @@ class WebStory {
   choiceSelector:string;
 
   impatience:number = 0;
+  scrollInertia=.02;
 
   constructor(storyElement:HTMLElement|string, displayElement=storyElement) {
     if (typeof storyElement === "string") {
@@ -178,6 +179,13 @@ class WebStory {
     while (el.dataset[varName] == null && el.parentElement) {
       el = el.parentElement;
     }
+    if (el.dataset[varName] == null && varName.substr(0,1) !== varName.substr(0,1).toLowerCase()) {
+      varName = varName.substr(0,1).toLowerCase() + varName.substr(1);
+      var r = this.get(varName, returnElement);
+      if (typeof r === "string") {
+        return r.substr(0,1).toLocaleUpperCase() + r.substr(1);
+      }
+    }
     if (returnElement) {
       if (el.dataset[varName] == null) el = this.currentElement.parentElement;
       return el;
@@ -237,12 +245,12 @@ class WebStory {
       return this.currentTeller&&this.currentTeller.goOn();
     }
     while (ahead > 0) {
-      maxSpeed += this._scrollInertia;
+      maxSpeed += this.scrollInertia;
       ahead -= maxSpeed;
     }
     while(tDelta>0) {
       tDelta-=17;
-      this._scrollSpeed = Math.min(maxSpeed, this._scrollSpeed + this._scrollInertia);
+      this._scrollSpeed = Math.min(maxSpeed, this._scrollSpeed + this.scrollInertia);
       this._scrollBuffer += this._scrollSpeed;
     }
     if (this._scrollBuffer >= 1) {
@@ -301,7 +309,6 @@ class WebStory {
   */
   private _scrollTO:any;
   private _scrollSpeed=0;
-  private _scrollInertia=.02;
   private _scrollBuffer=0;
   private _lastScrollTime:number;
 

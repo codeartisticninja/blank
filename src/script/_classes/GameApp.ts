@@ -1,6 +1,6 @@
 "use strict";
 import BaseGameApp = require("./lib/BaseGameApp");
-import Pong = require("./tellers/Pong");
+// import MadLipper = require("./tellers/MadLipper");
 
 
 
@@ -12,17 +12,18 @@ class GameApp extends BaseGameApp {
 
   constructor(storyElement: string, displayElement=storyElement) {
     super(storyElement, displayElement);
-    this.story.addTeller("canvas.pong", Pong);
+    // this.story.addTeller("p", MadLipper);
+    this.story.scrollInertia = 1;
     this.initLauchSettings();
   }
 
   initLauchSettings() {
     var form = document.getElementById("launchSettings");
     var html = "<p>";
-    html += '<span><input id="ambianceChk" type="checkbox" /> <label for="ambianceChk">Ambiance</label></span> ';
-    html += '<span><input id="musicChk" type="checkbox" /> <label for="musicChk">Music</label></span> ';
+    // html += '<span><input id="ambianceChk" type="checkbox" /> <label for="ambianceChk">Ambiance</label></span> ';
+    // html += '<span><input id="musicChk" type="checkbox" /> <label for="musicChk">Music</label></span> ';
     html += '<span><input id="sfxChk" type="checkbox" /> <label for="sfxChk">Sound effects</label></span> ';
-    html += '<span><input id="fullscreenChk" type="checkbox" /> <label for="fullscreenChk">Full screen</label></span> ';
+    // html += '<span><input id="fullscreenChk" type="checkbox" /> <label for="fullscreenChk">Full screen</label></span> ';
     html += '</p><p><button>Begin</button></p>';
     form.innerHTML = html;
 
@@ -62,9 +63,9 @@ class GameApp extends BaseGameApp {
     checkbox = <HTMLInputElement>form.querySelector("#fullscreenChk");
     if (checkbox) this.prefs.set("fullscreen", checkbox.checked);
 
-    if (this.prefs.get("fullscreen")) {
+    /* if (this.prefs.get("fullscreen")) {
       this.goFullscreen();
-    }
+    } */
     this.story.impatience = 0;
     this.story.continue();
   }

@@ -1,23 +1,25 @@
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+// @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 html {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Georgia', serif;
 }
 
-.page-width > * {
-  font-size: .8em;
+textarea {
+  background-color: transparent;
+  border-width: 0;
+  box-sizing: border-box;
+  color: inherit;
+  display: block;
+  font-family: inherit;
+  font-size: inherit;
+
+  width: 100%;
+  height: auto;
+}
+
+p:focus {
+  box-shadow: none;
+  outline: none;
 }
 
 #display {
-
-  canvas {
-    // border: 1px solid white;
-
-    &:visible {
-      border-color: red;
-    }
-  }
-
-  .game {
-    font-size: 1.25em;
-  }
 }
