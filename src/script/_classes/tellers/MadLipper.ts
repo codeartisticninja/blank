@@ -12,7 +12,7 @@ class MadLipper extends Teller {
   src:string;
   output = "";
   inputName:string;
-  inputValue:string="_";
+  inputValue = "";
   inputPos:number=-1;
   inputType:string;
   inputChoices:string[];
@@ -38,17 +38,27 @@ class MadLipper extends Teller {
     var len = this.element.textContent.length;
     if (len < this.output.length) {
       this.setOutput(this.output.substr(0, Math.max(len, this.inputPos)));
+      if (this.inputName) {
+        this.inputValue = this.output.substr(this.inputPos);
+      } else {
+        this.inputValue = "";
+      }
     } else
     if (len > this.output.length) {
       var char:string,
           chars = this.element.textContent.substr(this.output.length).replace("\u00A0", " ");
       while (chars) {
-        char = chars[0]; chars = chars.substr(1);
+        char = chars.charAt(0); chars = chars.substr(1);
         if (this.inputName) {
           if (this.output.trim().substr(-1) !== "%") {
+            if (char.toLocaleLowerCase() === char.toLocaleUpperCase()) {
+              if (this.inputChoices) {
+                this.setFirstName();
+              }
+            }
             this.output += char;
             this.inputValue = this.output.substr(this.inputPos);
-            if (this.inputValue) {
+            /* if (this.inputValue) {
               char = this.inputValue.substr(-1);
               if (this.inputType === char) {
                 this.inputValue = this.inputValue.replace(char, "");
@@ -59,13 +69,11 @@ class MadLipper extends Teller {
               } else if (".!?".indexOf(char) !== -1 && this.inputType !== "$") {
                 this.setFirstName();
               }
-            }
+            } */
           }
         } else {
           char = this.src.charAt(this.output.length);
-          if (char === "%") {
-            this.getFirstName();
-          } else {
+          if (char !== "%") {
             this.output = this.src.substr(0, this.output.length+1);
           }
         }
@@ -146,12 +154,12 @@ class MadLipper extends Teller {
     this.inputName = null;
     this.inputValue = "";
     this.inputChoices = null;
+    this.inputPos = this.output.length;
     this.setOutput(this.src.substr(0, this.output.length));
   }
 
   setOutput(txt=this.output) {
     if (this.element.textContent === txt) {
-      console.log("as is");
       this.output = txt;
       return;
     }
@@ -207,13 +215,13 @@ class MadLipper extends Teller {
         if (this.output.substr(-1) !== "%") {
           status += ", then press ";
           switch (this.inputType) {
-            case " ":
+            /* case " ":
               status += "space.";
               break;
             
             case ";":
               status += "period.";
-              break;
+              break; */
             
             default:
               status += "enter.";
@@ -223,7 +231,11 @@ class MadLipper extends Teller {
           status += ".";
         }
       } else {
-        status = "Type anything."
+        if (this.src.charAt(this.output.length) === "%") {
+          status = "Press enter.";
+        } else {
+          status = "Type anything."
+        }
       }
     }
     if (MadLipper.statusBar) {
