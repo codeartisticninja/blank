@@ -1,30 +1,52 @@
 pre#reset.
+  {$adj1|%adj1} {$adj1_|an adjective}
+  {$adj2|%adj2} {$adj2_|an adjective}
+  {$adj3|%adj3} {$adj3_|an adjective}
+
   {$hero|%hero} {$hero_|a name}
-  {$heroAdj|%heroAdj}
+  {$heroAdj|%heroAdj} {$heroAdj_|an adjective}
   {$heroNoun|%heroNoun}
-  {$heroJob|%heroJob}
-  {$heroLikes|%heroLikes} {$heroLikes_|an obsession}
-  {$heroMotto|%heroMotto;}
-  {$heroWorkplace|%heroWorkplace}
+  {$heroHobby|%heroHobby} {$heroHobby_|a hobby}
+  {$heroFear|%heroFear}
   {$heroXe|%heroXe} {$heroXim|%heroXim} {$heroXis|%heroXis}
 
   {$home|%home} {$home_|place of origin}
   {$homeAdj|%homeAdj}
-  +
 
-article.checkers
+  {$gem|%gem} {$gem_|a noun}
+  {$gemHidden|%gemHidden} {$gemHidden_|a noun}
+  {$gemVerbed|%gemVerbed} {$gemVerbed_|a verb (past tense)}
+  {$gemAdj|%gemAdj} {$gemAdj_|an adjective}
+
+  {$friend|%friend} {$friend_|a name}
+  {$friendXe|%friendXe} {$friendXim|%friendXim} {$friendXis|%friendXis}
+  +
+  
+
+article.win311
 #act1
-  p Once there was a {$heroNoun} by the name of {$Hero}. {$HeroXe} was very {$heroAdj}. In fact, that's what the people of {$Home} always used to call {$heroXim}. {$Hero} the {$heroAdj} {$heroNoun}.
-  pre {$correct|%correct} {$correct_|[ "yes", "no" ]} +
-  p Wait... Is that right? Hmm... {$Correct}, {$correct|EQ "yes"|I'm sure of it now.|that was totally wrong. Let me try that again.}
-  pre {$correct|EQ "yes"|+|#reset}
-  p Anyway... There was this {$heroNoun} that was so obsessed with {$heroLikes}. It's like {$heroXe} always said, "{$heroMotto}". Man, {$heroXe} was so crazy about {$heroLikes} that all {$heroXis} colleagues at {$heroWorkplace}, where {$heroXe} worked as a {$heroJob}, grew tired of hearing about it.
+  #ordinaryWorld
+    p Once there was a {$heroNoun} by the name of {$Hero}. {$HeroXe} was very {$heroAdj}. In fact, that's what the people of {$Home} always used to call {$heroXim}. {$Hero} the {$heroAdj} {$heroNoun}.
+    pre {$correct|%correct} {$correct_|[ "yes", "no" ]} +
+    p Wait... Is that right? Hmm... {$Correct}, {$correct|EQ "yes"|it's all coming back to me now.|that doesn't make any sense. Let me try that again.}
+    pre {$correct|EQ "yes"|+|#reset}
+    p So anyway... Every day of {$heroXis} life, {$heroXe} liked to {$heroHobby}. It was {$heroXis} favorite thing to do. As long as {$heroXe} didn't have to deal with {$heroFear}, {$heroXe} was happy. Perhaps it was all a part of {$heroXis} {$heroAdj} nature. 
+    pre .+
+  #incitingIncident
+    pre {$adj|%adj}
+    p Then one day, just when {$Hero} was about to {$heroHobby}, {$heroXe} stumbled upon a {$gem} hidden inside a {$gemHidden}. There was something oddly {$gemAdj} about it. {$Hero} picked it up and {$gemVerbed} it. Hmmm.. Nothing happened..
+    p {$Hero} couldn't lay this mystery to rest just yet. {$HeroXe} had to show it to {$heroXis} friend, {$Friend}. The ...
+    pre .+
+  #refusal
+    pre .+
+  #lockIn
+    pre .+
   pre .+
 #act2
-  p The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.
+  p 
   pre .+
 #act3
-  p Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass.
+  p 
   pre .+
 
 
@@ -34,3 +56,8 @@ article.checkers
     li(title="Play Again?")
       pre {{ location.reload(); }} ..+
   p Restarting...
+
+#shuffle
+  pre.
+    {{
+    }} ^

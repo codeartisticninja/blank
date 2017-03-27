@@ -55,9 +55,11 @@ class MadLipper extends Teller {
               if (this.inputChoices) {
                 this.setFirstName();
               }
+              this.output += char;
+            } else {
+              this.inputValue = this.element.textContent.substr(this.inputPos);
+              this.output = this.src.substr(0, this.inputPos) + this.inputValue;
             }
-            this.output += char;
-            this.inputValue = this.output.substr(this.inputPos);
             /* if (this.inputValue) {
               char = this.inputValue.substr(-1);
               if (this.inputType === char) {
@@ -154,8 +156,8 @@ class MadLipper extends Teller {
     this.inputName = null;
     this.inputValue = "";
     this.inputChoices = null;
+    this.setOutput(this.src.substr(0, this.inputPos + val.length));
     this.inputPos = this.output.length;
-    this.setOutput(this.src.substr(0, this.output.length));
   }
 
   setOutput(txt=this.output) {
@@ -234,7 +236,7 @@ class MadLipper extends Teller {
         if (this.src.charAt(this.output.length) === "%") {
           status = "Press enter.";
         } else {
-          status = "Type anything."
+          status = "Type anything (or press enter)."
         }
       }
     }
