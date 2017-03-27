@@ -13,7 +13,6 @@ class GameApp extends BaseGameApp {
   constructor(storyElement: string, displayElement=storyElement) {
     super(storyElement, displayElement);
     this.story.addTeller("p", MadLipper);
-    MadLipper.statusBar = document.getElementById("status");
     this.story.scrollInertia = 1;
     this.initLauchSettings();
   }
@@ -69,6 +68,9 @@ class GameApp extends BaseGameApp {
     } */
     this.story.impatience = 0;
     this.story.continue();
+    setTimeout(()=>{
+      MadLipper.statusBar = <HTMLElement>document.querySelector("#display .win311 .winbottom");
+    }), 10000;
   }
 }
 export = GameApp;

@@ -1,6 +1,6 @@
 // @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 html {
-  font-family: 'Georgia', serif;
+  font-family: serif;
 }
 
 textarea {
@@ -22,6 +22,59 @@ p:focus {
 }
 
 #display {
+  article:last-child .passage:last-child {
+    margin-top: 50vh;
+    margin-bottom: 10em;
+    min-height: 50vh;
+  }
+  article.win311 {
+    background-attachment: fixed;
+    background-image: url("winlogo.png");
+    background-position: center;
+    // background-size: 16em;
+    color: #000;
+
+    .page-width {
+      background-color: #fff;
+
+      .wintop, .status {
+        background-repeat: no-repeat;
+        content: " ";
+        display: block;
+        margin: 0;
+        margin-left: -1em;
+        padding: .1em 1em;
+        z-index: 1024;
+
+        position: fixed;
+        width: @page-width;
+        max-width: calc(100vw - 2em);
+      }
+      .wintop {
+        background-image: url("wintopright.png"), url("wintopleft.png"), url("wintop.png");
+        background-position: top right, top left, top center;
+        top: 0;
+        height: 4em;
+
+        &.hidden {
+          top: -4em;
+        }
+      }
+      .status {
+        background-color: #c0c7cf;
+        background-position: bottom left;
+        border-top: 1px solid #000;
+        bottom: 0;
+        font-family: sans-serif;
+        min-height: 1em;
+
+        &.hidden {
+          bottom: -4em;
+        }
+      }
+    }
+
+  }
 }
 
 #status {

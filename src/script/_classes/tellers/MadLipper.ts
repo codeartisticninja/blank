@@ -32,6 +32,13 @@ class MadLipper extends Teller {
     this.element.contentEditable = "true";
     this.element.focus();
     this.setOutput("");
+    if (this.element.classList.contains("status")) {
+      MadLipper.statusBar = this.element;
+      this.setStatus("Start typing.");
+    }
+    if (!this.src.trim()) {
+      this.hurry();
+    }
   }
 
   type() {
