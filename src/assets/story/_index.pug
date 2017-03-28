@@ -1,3 +1,6 @@
+article.win311
+p.wintop
+p.status
 pre#reset.
   {$adj1|%adj1} {$adj1_|an adjective}
   {$adj2|%adj2} {$adj2_|an adjective}
@@ -23,14 +26,11 @@ pre#reset.
   +
   
 
-article.win311
-p.wintop
-p.status
 #act1
   #ordinaryWorld
     p Once there was a {$heroNoun} by the name of {$Hero}. {$HeroXe} was very {$heroAdj}. In fact, that's what the people of {$Home} always used to call {$heroXim}. {$Hero} the {$heroAdj} {$heroNoun}.
     pre {$correct|%correct} {$correct_|[ "yes", "no" ]} +
-    p Wait... Is that right? Hmm... {$Correct}, {$correct|EQ "yes"|it's all coming back to me now.|that doesn't make any sense. Let me try that again.}
+    p {Wait... Is that right?|Did I get it right this time?} Hmm... {$Correct}, {$correct|EQ "yes"|it's all coming back to me now.|that doesn't make any sense. Let me try that again.}
     pre {$correct|EQ "yes"|+|#reset}
     p So anyway... Every day of {$heroXis} life, {$heroXe} liked to {$heroHobby}. It was {$heroXis} favorite thing to do. As long as {$heroXe} didn't have to deal with {$heroFear}, {$heroXe} was happy. Perhaps it was all a part of {$heroXis} {$heroAdj} nature. 
     pre .+
