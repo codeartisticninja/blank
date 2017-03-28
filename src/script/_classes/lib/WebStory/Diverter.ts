@@ -6,7 +6,7 @@ import WebStory = require("./WebStory");
 /**
  * Diverter class
  * 
- * @date 09-02-2017
+ * @date 28-mar-2017
  */
 
 class Diverter extends Teller {
@@ -16,7 +16,7 @@ class Diverter extends Teller {
   }
 
   init() {
-    var dest = this.element.textContent.trim();
+    var dest = this.element.textContent.trim() || "+";
     if (dest === "^") {
       this.story.return(this);
     } else

@@ -1,6 +1,6 @@
-Theme: Write
-============
-The theme of the moth is "write".
+The ___ adventure of ___
+========================
+You figure it out...
 
 Compile and run
 ---------------

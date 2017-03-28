@@ -45,10 +45,10 @@ p.status
     pre .+
   pre .+
 #act2
-  p 
+  p [Act 2]
   pre .+
 #act3
-  p 
+  p [Act 3]
   pre .+
 
 
@@ -62,4 +62,15 @@ p.status
 #shuffle
   pre.
     {{
+      function shuffle(arr) {
+        var s, r;
+        for(var i=0;i LT arr.length;i++) {
+          r = Math.floor(Math.random()*arr.length);
+          s = arr[i];
+          arr[i] = arr[r];
+          arr[r] = s;
+        }
+        return arr;
+      }
+
     }} ^
