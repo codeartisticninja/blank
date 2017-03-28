@@ -16,7 +16,7 @@ if (!Element.prototype.matches) {
 /**
  * WebStory class
  * 
- * @date 21-mar-2017
+ * @date 28-mar-2017
  */
 
  var _nextChoiceId=0;
@@ -186,7 +186,20 @@ class WebStory {
   }
 
   alter(varName:string, value:any) {
-    this.set(varName, this.get(varName) + value);
+    var v = this.get(varName), i = 0;
+    if (v instanceof Array) {
+      if (typeof value === "string" && value.charAt(0) === "-") {
+        var i = v.indexOf(value.substr(1));
+        if (i !== -1) {
+          v.splice(i, 1);
+        }
+      } else {
+        v.push(value);
+      }
+    } else {
+      v += value;
+    }
+    this.set(varName, v);
   }
 
   addTeller(selector:string, teller:typeof Teller) {
