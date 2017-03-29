@@ -25,12 +25,14 @@ class MadLipper extends Teller {
     this.element.textContent = this.output;
     this.type = this.type.bind(this);
     this._type = this._type.bind(this);
+    this.setFirstName = this.setFirstName.bind(this);
     document.addEventListener("keydown", this._type);
     if (!MadLipper.txtInput) {
       MadLipper.txtInput = document.createElement("textarea");
       MadLipper.txtInput.classList.add("madlipper");
       this.story.appendElement(MadLipper.txtInput);
     }
+    MadLipper.txtInput.addEventListener("blur", this.setFirstName);
   }
 
   init() {
@@ -52,7 +54,6 @@ class MadLipper extends Teller {
     if (this.inputName) {
       if (MadLipper.txtInput.value.substr(-1) === "\n") {
         this.setFirstName();
-        MadLipper.txtInput.value = "";
       } else {
         this.setOutput();
       }
@@ -76,7 +77,7 @@ class MadLipper extends Teller {
     name = this.src.charAt(p++);
     this.inputName = "";
     while (char = this.src.charAt(p++)) {
-      if (char.toLocaleLowerCase() !== char.toLocaleUpperCase()) {
+      if (char.toLocaleLowerCase() !== char.toLocaleUpperCase() || parseInt(char)+1) {
         this.inputName += char;
         name += char;
       } else if (";$".indexOf(char) !== -1) {
@@ -100,6 +101,7 @@ class MadLipper extends Teller {
       this.inputChoices = [ "his", "her", "its", "their" ];
     }
     MadLipper.txtInput.value = "";
+    console.log("reading", name);
     return name;
   }
 
@@ -128,19 +130,20 @@ class MadLipper extends Teller {
     this.src = this.element.textContent; //.replace(name, val);
     this.inputName = null;
     this.inputChoices = null;
-    this.setOutput(this.output + val + " ");
+    this.setOutput(this.output + " " + val + " ");
   }
 
   setOutput(txt=this.output) {
     this.element.textContent = this.output = txt;
     if (this.inputName) {
-      this.element.textContent += MadLipper.txtInput.value;
+      this.element.textContent += " " + MadLipper.txtInput.value;
     }
     if (this.element.textContent.substr(-1).trim() === "") {
       this.element.innerHTML = this.element.innerHTML.trim() + '&nbsp;';
     }
     this.element.innerHTML += '<span class="cursor"/>';
     this.story.startScrolling();
+    MadLipper.txtInput.focus();
   }
 
   setStatus(status:string="") {
@@ -197,6 +200,7 @@ class MadLipper extends Teller {
   hurry() {
     if (this.output.trim() === this.src.trim()) {
       document.removeEventListener("keydown", this._type);
+      MadLipper.txtInput.removeEventListener("blur", this.setFirstName);
       this.element.contentEditable = "false";
       this.element.textContent = this.output;
       super.hurry();
@@ -209,6 +213,10 @@ class MadLipper extends Teller {
   */
 
   private _type(e:KeyboardEvent) {
+    if (e.keyCode === 9) {
+      e.preventDefault();
+      this.setFirstName();
+    }
     requestAnimationFrame(this.type);
   }
 }
