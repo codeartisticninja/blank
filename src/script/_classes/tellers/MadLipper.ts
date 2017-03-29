@@ -30,16 +30,26 @@ class MadLipper extends Teller {
     if (!MadLipper.txtInput) {
       MadLipper.txtInput = document.createElement("textarea");
       MadLipper.txtInput.classList.add("madlipper");
-      this.story.appendElement(MadLipper.txtInput);
+      // this.story.appendElement(MadLipper.txtInput);
     }
     MadLipper.txtInput.addEventListener("blur", this.setFirstName);
   }
 
   init() {
-    this.appendElement();
+    if (this.src) {
+      if (!MadLipper.txtInput.matches(":focus")) {
+        this.story.appendElement(MadLipper.txtInput);
+        this.appendElement();
+      } else {
+        this.appendElement();
+        this.story.appendElement(MadLipper.txtInput);
+      }
+    } else {
+      this.appendElement();
+    }
     // this.element.contentEditable = "true";
     // this.element.focus();
-    MadLipper.txtInput.focus();
+    // MadLipper.txtInput.focus();
     this.setOutput("");
     if (!this.src.trim()) {
       this.hurry();
@@ -100,13 +110,13 @@ class MadLipper extends Teller {
     if (name.substr(-3) === "Xis") {
       this.inputChoices = [ "his", "her", "its", "their" ];
     }
-    MadLipper.txtInput.value = "";
+    MadLipper.txtInput.value = "a ";
     console.log("reading", name);
     return name;
   }
 
   setFirstName() {
-    var val = MadLipper.txtInput.value.trim().replace(/\%/g, "");
+    var val = MadLipper.txtInput.value.replace("a ", "").trim().replace(/\%/g, "");
     if (!val) {
       this.output = this.output.trim();
       return;
@@ -136,14 +146,16 @@ class MadLipper extends Teller {
   setOutput(txt=this.output) {
     this.element.textContent = this.output = txt;
     if (this.inputName) {
-      this.element.textContent += " " + MadLipper.txtInput.value;
+      this.element.textContent += " " + MadLipper.txtInput.value.replace("a ", "");
     }
     if (this.element.textContent.substr(-1).trim() === "") {
       this.element.innerHTML = this.element.innerHTML.trim() + '&nbsp;';
     }
     this.element.innerHTML += '<span class="cursor"/>';
-    this.story.startScrolling();
+    // window.scrollTo(0,0);
     MadLipper.txtInput.focus();
+    // MadLipper.txtInput.scrollIntoView(false);
+    // this.element.scrollIntoView();
   }
 
   setStatus(status:string="") {
