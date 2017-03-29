@@ -2,15 +2,26 @@ article.win311
 p.wintop
 p.status
 pre#reset.
+  {$cols|["verbed", "adj", "noun"]}
+  {$verbeds|[]}
+  {$verbed1|%verbed1} {$verbed1_|a verb (past tense)}
+  {$verbed2|%verbed2} {$verbed2_|a verb (past tense)}
+  {$verbed3|%verbed3} {$verbed3_|a verb (past tense)}
+  {$adjs|[]}
   {$adj1|%adj1} {$adj1_|an adjective}
   {$adj2|%adj2} {$adj2_|an adjective}
   {$adj3|%adj3} {$adj3_|an adjective}
+  {$nouns|[]}
+  {$noun1|%noun1} {$noun1_|a noun}
+  {$noun2|%noun2} {$noun2_|a noun}
+  {$noun3|%noun3} {$noun3_|a noun}
 
   {$hero|%hero} {$hero_|a name}
   {$heroAdj|%heroAdj} {$heroAdj_|an adjective}
-  {$heroNoun|%heroNoun}
+  {$heroNoun|%heroNoun} {$heroNoun_|a noun}
   {$heroHobby|%heroHobby} {$heroHobby_|a hobby}
   {$heroFear|%heroFear}
+  {$heroHouse|%heroHouse} {$heroHouse_|place of residence}
   {$heroXe|%heroXe} {$heroXim|%heroXim} {$heroXis|%heroXis}
 
   {$home|%home} {$home_|place of origin}
@@ -36,8 +47,12 @@ pre#reset.
     pre .+
   #incitingIncident
     pre {$adj|%adj}
-    p Then one day, just when {$Hero} was about to {$heroHobby}, {$heroXe} stumbled upon a {$gem} hidden inside a {$gemHidden}. There was something oddly {$gemAdj} about it. {$Hero} picked it up and {$gemVerbed} it. Hmmm.. Nothing happened..
-    p {$Hero} couldn't lay this mystery to rest just yet. {$HeroXe} had to show it to {$heroXis} friend, {$Friend}. The ...
+    p Then one day, just when {$Hero} was about to {$heroXis} daily chores around the {$heroHouse}, {$heroXe} stumbled upon a {$gem} hidden inside a {$gemHidden}. There was something oddly {$gemAdj} about it. {$Hero} picked it up and {$gemVerbed} it. Hmmm.. Nothing happened..
+    p {$Hero} decided to keep the {$gem} and went on to do {$heroXis} chores. First {$heroXe} {$verbed1} the {$adj1} {$noun1}, then {$verbed2} the {$adj2} {$noun2} and lastly {$verbed3} the {$adj3} {$noun3}.
+    pre #collect ^
+    pre #shift ^
+    p Now {$Hero} could finally relax and {$heroHobby} for the rest of the day. 
+    // p {$Hero} couldn't lay this mystery to rest just yet. {$HeroXe} had to show it to {$heroXis} friend, {$Friend}. The ...
     pre .+
   #refusal
     pre .+
@@ -59,6 +74,33 @@ pre#reset.
       pre {{ location.reload(); }} ..+
   p Restarting...
 
+
+
+#collect
+  pre.
+    {{
+      var n = $("cols");
+      for(var i=1;i LTE 3;i++) {
+        for(var j=0;j LT n.length;j++) {
+          if ($(n[j]+i).charAt(0) !== "%") {
+            $(n[j]+"s", $(n[j]+i), true);
+            $(n[j]+i, "%"+n[j]+i);
+          }
+        }
+      }
+    }} ^
+#shift
+  pre.
+    {{
+      var n = $("cols");
+      for(var j=0;j LT n.length;j++) {
+        var col = $(n[j]+"s");
+        for(var i=1;i LTE j;i++) {
+          col.push(col.shift());
+        }
+        $(n[j]+"s", col);
+      }
+    }} ^
 #shuffle
   pre.
     {{
@@ -72,5 +114,8 @@ pre#reset.
         }
         return arr;
       }
-
+      var n = $("cols");
+      for(var j=0;j LT n.length;j++) {
+        $(n[j]+"s", shuffle($n[j]+"s"));
+      }
     }} ^
