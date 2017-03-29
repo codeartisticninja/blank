@@ -1,6 +1,14 @@
 // @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 html {
+  background-image: url("marble.png");
+  background-size: auto;
+  color: black;
   font-family: serif;
+  padding-top: 2em;
+}
+
+.page-width {
+  background-color: white;
 }
 
 textarea {
@@ -21,6 +29,16 @@ p:focus {
   outline: none;
 }
 
+#launchSettings {
+  background-color: #ccc;
+  border-color: #ccc;
+
+  button {
+    background-color: #ddd;
+    border: 2px outset #999;
+  }
+}
+
 #display {
   /* article:last-child .passage:last-child {
     box-sizing: border-box;
@@ -29,9 +47,9 @@ p:focus {
     min-height: 100vh;
     padding-top: 6em;
   } */
-  article.win311 {
+  article {
     background-attachment: fixed;
-    background-image: url("winlogo.png");
+    // background-image: url("winlogo.png");
     background-position: center;
     // background-size: 16em;
     color: #000;
