@@ -136,6 +136,9 @@ class MadLipper extends Teller {
     if (this.inputName) {
       this.element.textContent += MadLipper.txtInput.value;
     }
+    if (this.element.textContent.substr(-1).trim() === "") {
+      this.element.innerHTML = this.element.innerHTML.trim() + '&nbsp;';
+    }
     this.element.innerHTML += '<span class="cursor"/>';
     this.story.startScrolling();
   }
