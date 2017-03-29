@@ -68,9 +68,6 @@ class GameApp extends BaseGameApp {
     } */
     this.story.impatience = 0;
     this.story.continue();
-    setTimeout(()=>{
-      MadLipper.statusBar = <HTMLElement>document.querySelector("#display .win311 .winbottom");
-    }), 10000;
   }
 }
 export = GameApp;

@@ -56,6 +56,7 @@ class MadLipper extends Teller {
     }
     if (this.element.classList.contains("status")) {
       MadLipper.statusBar = this.element;
+      console.log(MadLipper.statusBar);
       this.setStatus("You can start typing now.");
     }
   }
@@ -151,7 +152,9 @@ class MadLipper extends Teller {
     if (this.element.textContent.substr(-1).trim() === "") {
       this.element.innerHTML = this.element.innerHTML.trim() + '&nbsp;';
     }
-    this.element.innerHTML += '<span class="cursor"/>';
+    if (this.output.length < this.src.length) {
+      this.element.innerHTML += '<span class="cursor"/>';
+    }
     // window.scrollTo(0,0);
     MadLipper.txtInput.focus();
     // MadLipper.txtInput.scrollIntoView(false);
