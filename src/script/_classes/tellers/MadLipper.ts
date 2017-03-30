@@ -111,13 +111,13 @@ class MadLipper extends Teller {
     if (name.substr(-3) === "Xis") {
       this.inputChoices = [ "his", "her", "its", "their" ];
     }
-    MadLipper.txtInput.value = "a ";
+    MadLipper.txtInput.value = "";
     console.log("reading", name);
     return name;
   }
 
   setFirstName() {
-    var val = MadLipper.txtInput.value.replace("a ", "").trim().replace(/\%/g, "");
+    var val = MadLipper.txtInput.value.trim().replace(/\%/g, "");
     if (!val) {
       this.output = this.output.trim();
       return;
@@ -147,7 +147,7 @@ class MadLipper extends Teller {
   setOutput(txt=this.output) {
     this.element.textContent = this.output = txt;
     if (this.inputName) {
-      this.element.textContent += " " + MadLipper.txtInput.value.replace("a ", "");
+      this.element.textContent += " " + MadLipper.txtInput.value;
     }
     if (this.element.textContent.substr(-1).trim() === "") {
       this.element.innerHTML = this.element.innerHTML.trim() + '&nbsp;';
