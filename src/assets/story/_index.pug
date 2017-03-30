@@ -34,6 +34,7 @@ pre#reset.
   {$gemAdj|%gemAdj} {$gemAdj_|an adjective}
 
   {$friend|%friend} {$friend_|a name}
+  {$friendAdj|%friendAdj} {$friendAdj_|an adjective}
   {$friendXe|%friendXe} {$friendXim|%friendXim} {$friendXis|%friendXis}
   +
   
@@ -56,13 +57,15 @@ pre#reset.
     pre .+
   #refusal
     p When {$heroXe} woke up the next day, {$heroXis} friend, {$Friend}, came to visit. {$FriendXe} came to tell {$Hero} about a {$adj1} dream {$friendXe} had.
-    p "I tell you, {$Hero}, it was the most {$adj1} dream I've ever had," {$friendXe} said. "First I {{$("verbeds")[0]}} the {{$("adjs")[0]}} {{$("nouns")[0]}}, then I {{$("verbeds")[1]}} the {{$("adjs")[1]}} {{$("nouns")[1]}} and then somehow I ended up {{$("verbeds")[2]}} the {{$("adjs")[2]}} {{$("nouns")[2]}}! It was so embarrasing. All the other {$homeInhab} all over {$home} was laughing at me!"
+    p "I tell you, {$Hero}, it was the most {$adj1} dream I've ever had," {$friendXe} said. "First I {{$("verbeds")[0]}} the {{$("adjs")[0]}} {{$("nouns")[0]}}, then I {{$("verbeds")[1]}} the {{$("adjs")[1]}} {{$("nouns")[1]}} and then somehow I ended up {{$("verbeds")[2]}} the {{$("adjs")[2]}} {{$("nouns")[2]}}! It was so embarrasing. All the other {$homeInhab} from all over {$home} was laughing at me!"
+    p {$Hero} {$verbed1} some of {$heroXis} {$noun1} as {$heroXe} listened to {$Friend} talk about {$friendXis} {$adj1} dream. {$Hero} thought {$Friend} was very {$friendAdj} and told {$friendXim} to go home, and so {$friendXe} did.
     pre #collect ^
-    pre .+
-  #lockIn
     pre .+
   pre .+
 #act2
+  #hub
+    p {$Hero} thought long and hard about where to go to solve {$Friend}'s problem. {$HeroXe} could either go to {$home}'s archive to find answers, look up at the stars for guidance or back home to do some more chores.
+    p After a lot of {$heroAdj} thoughts, {$heroXe} decided to go {$dest}.
   p [Act 2]
   pre .+
 #act3

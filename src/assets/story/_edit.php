@@ -30,6 +30,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo @$_GET["file"]?$_GET["file"]:"./"; ?></title>
     <link rel="stylesheet" type="text/css" href="../../../build/style/markdown.css">
+    <style>
+      textarea { background-color: black; color: white;  }
+    </style>
   </head>
   <body>
     <?php if(@$files): ?>

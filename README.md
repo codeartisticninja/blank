@@ -1,6 +1,6 @@
 The ___ adventure of ___
 ========================
-You figure it out...
+It's the ___ game where you play the role of ___ and help ___ in order to ___.
 
 Compile and run
 ---------------
