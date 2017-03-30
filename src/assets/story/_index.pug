@@ -67,8 +67,13 @@ pre#reset.
     pre {$dest|%dest} {$dest_|["archive", "stars", "home"]}
     p {$Hero} thought long and hard about where to go to solve {$Friend}'s problem. {$HeroXe} could either go to {$home}'s archive to find answers, look up at the stars for guidance or back home to do some more chores.
     p After a lot of {$heroAdj} thoughts, {$heroXe} decided to go {$dest}.
-    pre {}
-  p [Act 2]
+    pre #{$dest}
+  #archive
+    pre #hub
+  #stars
+    pre #hub
+  #home
+    pre #hub
   pre .+
 #act3
   p [Act 3]
