@@ -71,13 +71,16 @@ pre#reset.
     pre #{$dest}
   #archive
     p something with names and relation ships.
+    pre #collect ^
     pre #hub
   #stars
     p something with counting stuff.
+    pre #collect ^
     pre #hub
   #home
     p the usual chores.
-    pre #hub
+    pre #collect ^
+    pre {{ if ($("verbeds").indexOf($("gemResponse")) !== -1 AND $("adjs").indexOf($("gemAdj")) !== -1 AND $("nouns").indexOf($("gem")) !== -1) { "#act3" } else { "#hub" } }}
 #act3
   p something with {$Hero} having to face {$heroXis} fear of {$heroFear}.
   p Suddenly the {$gem}
