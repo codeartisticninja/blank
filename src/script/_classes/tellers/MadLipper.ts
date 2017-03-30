@@ -32,7 +32,7 @@ class MadLipper extends Teller {
       MadLipper.txtInput.classList.add("madlipper");
       // this.story.appendElement(MadLipper.txtInput);
     }
-    MadLipper.txtInput.addEventListener("blur", this.setFirstName);
+    // MadLipper.txtInput.addEventListener("blur", this.setFirstName);
   }
 
   init() {
@@ -50,6 +50,7 @@ class MadLipper extends Teller {
     // this.element.contentEditable = "true";
     // this.element.focus();
     // MadLipper.txtInput.focus();
+    MadLipper.txtInput.value = "";
     this.setOutput("");
     if (!this.src.trim()) {
       this.hurry();
@@ -228,11 +229,11 @@ class MadLipper extends Teller {
   */
 
   private _type(e:KeyboardEvent) {
+    requestAnimationFrame(this.type);
     if (e.keyCode === 9) {
       e.preventDefault();
       this.setFirstName();
     }
-    requestAnimationFrame(this.type);
   }
 }
 export = MadLipper;
