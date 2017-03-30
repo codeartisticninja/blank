@@ -70,7 +70,7 @@ pre#reset.
     p After a lot of {$heroAdj} thoughts, {$heroXe} decided to go {$dest}.
     pre #{$dest}
   #archive
-    p something with names and relation ships.
+    p something with names and relationships.
     pre #collect ^
     pre #hub
   #stars
@@ -82,12 +82,21 @@ pre#reset.
     pre #collect ^
     pre {{ if ($("verbeds").indexOf($("gemResponse")) !== -1 AND $("adjs").indexOf($("gemAdj")) !== -1 AND $("nouns").indexOf($("gem")) !== -1) { "#act3" } else { "#hub" } }}
 #act3
+  p {$place|%place} {$place_|hiding place}
   p something with {$Hero} having to face {$heroXis} fear of {$heroFear}.
-  p Suddenly the {$gem}
-  pre .+
+  p Suddenly the {$gem} {$gemVerbed} back at {$Hero} and a large amount of {$heroFear} appeard in front of {$heroXim}!
+  p {$Hero} was terrified and thought {$heroXe}'d had enough of this {$gemAdj} {$gem} and decided to put it back inside the {$place} where {$heroXe} found it!
+  #isitover
+    pre {{ if ($("place") === $("gemHidden")) { "#end" } else { "+" } }}
+    p But {|still} nothing happened! Instead the {$heroFear} just came {|even} closer and closer!
+    p Did {$Hero} forget {|again} where {$heroXe} found the {$gemAdj} {$gem}? {$place|%place}
+    p {$HeroXe} put the {$gem} inside the {$place} instead.
+    pre #isitover
 
 
 #end
+  p At last the {$heroFear} disappeard and everything in {$home} finally went back to normal.
+  p {$Hero} spent the rest of {$heroXis} days to {$heroHobby} and lived happily ever after!
   p(style="text-align:center") THE END
   ul
     li(title="Play Again?")
