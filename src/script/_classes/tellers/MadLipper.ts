@@ -195,6 +195,12 @@ class MadLipper extends Teller {
       }
     }
     if (MadLipper.statusBar) {
+      if (MadLipper.statusBar.textContent !== status) {
+        MadLipper.statusBar.classList.add("flash");
+        setTimeout(()=>{
+          MadLipper.statusBar.classList.remove("flash");
+        }, 128);
+      }
       MadLipper.statusBar.textContent = status;
     } else {
       console.log(status);
