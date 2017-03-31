@@ -30,6 +30,8 @@ class MadLipper extends Teller {
     if (!MadLipper.txtInput) {
       MadLipper.txtInput = document.createElement("textarea");
       MadLipper.txtInput.classList.add("madlipper");
+      MadLipper.txtInput.setAttribute("autocapitalize", "none");
+      MadLipper.txtInput.setAttribute("autocorrect", "off");
       // this.story.appendElement(MadLipper.txtInput);
     }
     // MadLipper.txtInput.addEventListener("blur", this.setFirstName);
