@@ -106,7 +106,7 @@ pre#reset.
   #home
     pre {{ if ($("_visits") LT 3) { "+ +"; } else { "+"; } }}
     p {$Hero} took another look at the {$gemAdj} {$gem} {$heroXe} found in the {$gemHidden} and how it {$gemResponse} at {$heroXim}. Perhaps {$heroXe} should do the same to the {$gem}?
-    p There were still a lot of stuff to be done around the {$heroHouse}. Like {$adj1} {$noun1} to be {$verbed1}, {$adj2} {$noun2} to be {$verbed2} and even more {$adj3} {$noun3} to be {$verbed3}.
+    p There were still a lot of stuff to be done around the {$heroHouse}. Like some {$adj1} {$noun1} to be {$verbed1}, not to mention all off {$heroXis} {$adj2} {$noun2} to be {$verbed2} and even more {$adj3} {$noun3} to be {$verbed3}.
     pre #collect ^
     pre #shift ^
     pre {{ if ($("verbeds").indexOf($("gemResponse")) !== -1 AND $("adjs").indexOf($("gemAdj")) !== -1 AND $("nouns").indexOf($("gem")) !== -1) { "#act3" } else { "+" } }}
