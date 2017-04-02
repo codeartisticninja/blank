@@ -16,7 +16,7 @@ if (!Element.prototype.matches) {
 /**
  * WebStory class
  * 
- * @date 28-mar-2017
+ * @date 1-apr-2017
  */
 
  var _nextChoiceId=0;
@@ -398,8 +398,6 @@ class WebStory {
   }
 
   private _preProcess(html:string) {
-    var $ = this._$;
-
     var brackStart = html.indexOf("{{");
     var brackEnd=-1;
     var brack="";
@@ -407,7 +405,7 @@ class WebStory {
       brackEnd = html.indexOf("}}", brackStart);
       brack = html.substring(brackStart+2, brackEnd);
 
-      brack = eval(this._htmlDequote(this._escapeHTML(brack)));
+      brack = this._eval(this._htmlDequote(this._escapeHTML(brack)));
       if (brack == null) {
         brack = "";
       } else {
@@ -557,6 +555,24 @@ class WebStory {
       el = <HTMLElement>el.children[i];
     }
     return el;
+  }
+
+  private _eval(_js:string, context=this.currentElement) {
+    var $ = {}, $$ = {}, _el = context, _name:string, _vars:Object;
+    while (_el && _el !== this.storyElement.parentElement) {
+      _vars = JSON.parse(JSON.stringify(_el.dataset));
+      for (_name in _vars) {
+        if ($[_name] === undefined) {
+          $[_name] = this._jsonParse(_vars[_name]);
+        }
+      }
+      _el = _el.parentElement;
+    }
+    var _result = eval(_js);
+    for (_name in $$) {
+      this.set(_name, $$[_name]);
+    }
+    return _result;
   }
 }
 export = WebStory;
