@@ -16,7 +16,7 @@ if (!Element.prototype.matches) {
 /**
  * WebStory class
  * 
- * @date 1-apr-2017
+ * @date 4-apr-2017
  */
 
  var _nextChoiceId=0;
@@ -53,7 +53,6 @@ class WebStory {
 
     this.startScrolling = this.startScrolling.bind(this);
     this._getImpatient = this._getImpatient.bind(this);
-    this._$ = this._$.bind(this);
     document.addEventListener("keydown", this._getImpatient);
     document.addEventListener("mousedown", this._getImpatient);
     document.addEventListener("wheel", this._getImpatient);
@@ -157,10 +156,10 @@ class WebStory {
 
   get(varName:string, returnElement=false):any {
     var el = this.currentElement;
-    if (varName.trim().substr(-1) === "]") {
-      var parts = varName.trim().split("[");
-      varName = parts.pop().replace("]", "");
-      var selector = parts.join("[");
+    if (varName.trim().indexOf(" ") !== -1) {
+      var parts = varName.trim().split(" ");
+      varName = parts.pop().trim();
+      var selector = parts.join(" ");
       el = <HTMLElement>this._getElement(selector);
     }
     while (el.dataset[varName] == null && el.parentElement) {
@@ -185,21 +184,36 @@ class WebStory {
     this.get(varName, true).dataset[varName] = JSON.stringify(value);
   }
 
-  alter(varName:string, value:any) {
-    var v = this.get(varName), i = 0;
+  add(varName:string, value:any) {
+    var v = this.get(varName);
     if (v instanceof Array) {
-      if (typeof value === "string" && value.charAt(0) === "-") {
-        var i = v.indexOf(value.substr(1));
-        if (i !== -1) {
-          v.splice(i, 1);
-        }
-      } else {
-        v.push(value);
-      }
+      v.push(value);
     } else {
       v += value;
     }
     this.set(varName, v);
+  }
+  remove(varName:string, value:any) {
+    var v = this.get(varName), i = 0;
+    if (v instanceof Array) {
+      i = v.indexOf(value);
+      while (i !== -1) {
+        v.splice(i, 1);
+        i = v.indexOf(value);
+      }
+    } else if (typeof v === "string") {
+      while (i !== -1) {
+        v = v.replace(value, "");
+        i = v.indexOf(value);
+      }
+    } else {
+      v -= value;
+    }
+    this.set(varName, v);
+  }
+  contains(varName:string, value:any) {
+    var v = this.get(varName);
+    return v.indexOf(value) !== -1;
   }
 
   addTeller(selector:string, teller:typeof Teller) {
@@ -391,6 +405,7 @@ class WebStory {
         }
       }
       selector = parts.join(" ").trim();
+      console.log(selector);
       return selector ? context.querySelector(selector) : context;
     } else {
       return selector;
@@ -456,7 +471,10 @@ class WebStory {
         tag = "";
         if (parts[1].substr(0,1) === "+") {
           parts[1] = parts[1].substr(1);
-          this.alter(parts[0], this._jsonParse(this._htmlDequote(parts[1])));
+          this.add(parts[0], this._jsonParse(this._htmlDequote(parts[1])));
+        } else if (parts[1].substr(0,1) === "-") {
+          parts[1] = parts[1].substr(1);
+          this.remove(parts[0], this._jsonParse(this._htmlDequote(parts[1])));
         } else {
           this.set(parts[0], this._jsonParse(this._htmlDequote(parts[1])));
         }
@@ -508,17 +526,6 @@ class WebStory {
     str = str.replace(/(\s|^)GT(\s|$)/g,  " &gt; ");
     d.innerHTML = str;
     return d.textContent;
-  }
-
-  private _$(varName:string, value?:any, alter?:boolean) {
-    if (alter) {
-      return this.alter(varName, value);
-    } else
-    if (value !== undefined) {
-      return this.set(varName, value);
-    } else {
-      return this.get(varName);
-    }
   }
 
   private _jsonParse(str:string) {
