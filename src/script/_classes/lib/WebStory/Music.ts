@@ -4,12 +4,12 @@ import WebStory = require("./WebStory");
 
 
 /**
- * Sound class
+ * Music class
  * 
- * @date 02-mar-2017
+ * @date 6-apr-2017
  */
 
-class Sound extends Teller {
+class Music extends Teller {
   audio:HTMLAudioElement;
   channel:string;
   static volumes:Object = {};
@@ -23,14 +23,14 @@ class Sound extends Teller {
 
   init() {
     var auds = this.story.rootDisplayElement.querySelectorAll("audio."+this.channel);
-    var snd:Sound, aud:HTMLAudioElement;
+    var snd:Music, aud:HTMLAudioElement;
     for (var i=0;i<auds.length;i++) {
       aud = <HTMLAudioElement>auds.item(i);
-      snd = <Sound>this.getTellerFromElement(aud);
+      snd = <Music>this.getTellerFromElement(aud);
       snd.fadeOut();
     }
-    if (Sound.enabled[this.channel] == null || Sound.enabled[this.channel]) {
-      if (Sound.volumes[this.channel]) this.audio.volume = Sound.volumes[this.channel];
+    if (Music.enabled[this.channel] == null || Music.enabled[this.channel]) {
+      if (Music.volumes[this.channel]) this.audio.volume = Music.volumes[this.channel];
       this.registerToElement();
       this.appendElement();
       this.audio.play();
@@ -72,4 +72,4 @@ class Sound extends Teller {
   private _tapEl:HTMLElement;
 
 }
-export = Sound;
+export = Music;

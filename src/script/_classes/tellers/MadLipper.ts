@@ -1,6 +1,7 @@
 "use strict";
 import WebStory = require("../lib/WebStory/WebStory");
 import Teller   = require("../lib/WebStory/Teller");
+import Sound    = require("../lib/WebStory/Game/Sound");
 
 
 /**
@@ -17,6 +18,8 @@ class MadLipper extends Teller {
   // inputPos:number=-1;
   // inputType:string;
   inputChoices:string[];
+  sfx:Sound;
+  id=Math.random();
 
   constructor(story:WebStory, element:HTMLElement) {
     super(story, element);
@@ -26,6 +29,14 @@ class MadLipper extends Teller {
     this.type = this.type.bind(this);
     this._type = this._type.bind(this);
     this.setFirstName = this.setFirstName.bind(this);
+
+    this.sfx = new Sound("./assets/sounds/typewriter.mp3");
+    this.sfx.setMark("key0", 0.3,   0.389);
+    this.sfx.setMark("key1", 0.9,   0.296);
+    this.sfx.setMark("key2", 1.624, 0.263);
+    this.sfx.setMark("enter", 6.95, 1);
+    this.sfx.setMark("stop", 7.787, .2);
+
     document.addEventListener("keydown", this._type);
     if (!MadLipper.txtInput) {
       MadLipper.txtInput = document.createElement("textarea");
@@ -65,21 +76,25 @@ class MadLipper extends Teller {
   }
 
   type() {
+    console.log(this.id, "typing");
     if (this.inputName) {
+      if (MadLipper.txtInput.value.trim()) this.sfx.play("key"+Math.floor(Math.random()*3));
       if (MadLipper.txtInput.value.substr(-1) === "\n") {
         this.setFirstName();
       } else {
         this.setOutput();
       }
     } else {
-      var p = Math.min(
-        (this.src+" ").indexOf(" ", this.output.length)+1,
-        (this.src+"%").indexOf("%")
-        );
+      var p = this.output.length+1;
       this.setOutput(this.src.substr(0, p));
-      MadLipper.txtInput.value = " ";
-      if (this.src.charAt(p) === "%") {
+      if (this.src.charAt(p) === "%" || this.output.indexOf("%") !== -1) {
+        this.sfx.stop(); this.sfx.play("stop");
         this.getFirstName();
+      } else if (this.src.charAt(p-1) !== " " && this.src.trim() !== this.output.trim()) {
+        this.sfx.play("key"+Math.floor(Math.random()*3));
+        setTimeout(this.type, 30+Math.random()*50);
+      } else {
+        MadLipper.txtInput.value = " ";
       }
     }
     this.setStatus();
@@ -88,6 +103,7 @@ class MadLipper extends Teller {
   getFirstName() {
     var p = this.src.indexOf("%"), name = "", char = "";
     if (p < 0) return "";
+    this.setOutput(this.src.substr(0, p));
     name = this.src.charAt(p++);
     this.inputName = "";
     while (char = this.src.charAt(p++)) {
@@ -227,6 +243,10 @@ class MadLipper extends Teller {
       MadLipper.txtInput.removeEventListener("blur", this.setFirstName);
       this.element.contentEditable = "false";
       this.element.textContent = this.output;
+      if (this.src.trim()) {
+        this.sfx.stop();
+        this.sfx.play("enter");
+      }
       super.hurry();
     }
     MadLipper.txtInput.focus();

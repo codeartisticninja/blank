@@ -5,8 +5,10 @@ import Teller = require("./WebStory/Teller");
 import Chooser = require("./WebStory/Chooser");
 import Diverter = require("./WebStory/Diverter");
 import Chapter = require("./WebStory/Chapter");
-import Sound = require("./WebStory/Sound");
+import Music = require("./WebStory/Music");
 import Game = require("./WebStory/Game/Game");
+import Sound = require("./WebStory/Game/Sound");
+
 
 if (!Element.prototype.requestFullscreen) {
     Element.prototype.requestFullscreen = 
@@ -44,7 +46,7 @@ class BaseGameApp {
     this.story.addTeller("ul, ol", Chooser);
     this.story.addTeller("pre", Diverter);
     this.story.addTeller("article", Chapter);
-    this.story.addTeller("audio", Sound);
+    this.story.addTeller("audio", Music);
     this.story.addTeller("canvas", Game);
     this.story.passageSelector = ".passage";
     this.story.choiceSelector = "li";
@@ -55,12 +57,14 @@ class BaseGameApp {
   }
 
   applySoundPrefs() {
-    Sound.enabled["ambiance"] = this.prefs.get("ambiance.enabled");
-    Sound.volumes["ambiance"] = this.prefs.get("ambiance.volume");
-    Sound.enabled["music"] = this.prefs.get("music.enabled");
-    Sound.volumes["music"] = this.prefs.get("music.volume");
-    Sound.enabled["sfx"]   = this.prefs.get("sfx.enabled");
-    Sound.volumes["sfx"]   = this.prefs.get("sfx.volume");
+    Music.enabled["ambiance"] = this.prefs.get("ambiance.enabled");
+    Music.volumes["ambiance"] = this.prefs.get("ambiance.volume");
+    Music.enabled["music"] = this.prefs.get("music.enabled");
+    Music.volumes["music"] = this.prefs.get("music.volume");
+    Music.enabled["sfx"]   = this.prefs.get("sfx.enabled");
+    Music.volumes["sfx"]   = this.prefs.get("sfx.volume");
+    Sound.enabled          = this.prefs.get("sfx.enabled");
+    Sound.volume           = this.prefs.get("sfx.volume");
   }
 }
 export = BaseGameApp;

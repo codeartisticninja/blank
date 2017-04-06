@@ -22,7 +22,7 @@ class GameApp extends BaseGameApp {
     var html = "<p>";
     // html += '<span><input id="ambianceChk" type="checkbox" /> <label for="ambianceChk">Ambiance</label></span> ';
     // html += '<span><input id="musicChk" type="checkbox" /> <label for="musicChk">Music</label></span> ';
-    // html += '<span><input id="sfxChk" type="checkbox" /> <label for="sfxChk">Sound effects</label></span> ';
+    html += '<span><input id="sfxChk" type="checkbox" /> <label for="sfxChk">Sound effects</label></span> ';
     // html += '<span><input id="fullscreenChk" type="checkbox" /> <label for="fullscreenChk">Full screen</label></span> ';
     html += '</p><p><button>New document</button></p>';
     form.innerHTML = html;
