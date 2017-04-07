@@ -4,13 +4,15 @@
 /**
  * Sound class
  * 
- * @date 6-apr-2017
+ * @date 7-apr-2017
  */
 
 class Sound {
   static enabled=true;
   static volume=1;
-  static ctx:AudioContext = new (window["AudioContext"] || window["webkitAudioContext"])();
+  static ctx:AudioContext;
+  gainNode:GainNode;
+  mainNode:AudioNode;
   file:string;
   source:AudioBufferSourceNode;
   buffer:AudioBuffer;
@@ -18,6 +20,14 @@ class Sound {
   oneInstance:boolean;
 
   constructor(src:string) {
+    if (!Sound.ctx) {
+      Sound.ctx = new (window["AudioContext"] || window["webkitAudioContext"])();
+    }
+    this.gainNode = Sound.ctx.createGain();
+    this.gainNode.gain.value = Sound.volume;
+    this.gainNode.connect(Sound.ctx.destination);
+    this.mainNode = this.gainNode;
+
     this.setMark("_all", 0);
     this.load(src, ()=>{
       if (this._playOnLoad) {
@@ -51,7 +61,7 @@ class Sound {
       return;
     }
     this.source = Sound.ctx.createBufferSource();
-    this.source.connect(Sound.ctx.destination);
+    this.source.connect(this.mainNode);
     this.source.buffer = this.buffer;
     this.source.start(0, this.marks[mark].start, this.marks[mark].duration);
     this._playOnLoad=null;
